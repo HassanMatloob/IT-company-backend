@@ -15,7 +15,7 @@ class CareerTechTagController extends AdminController
      *
      * @var string
      */
-    protected $title = 'CareerTechTag';
+    protected $title = 'Career Tech Tag';
 
     /**
      * Make a grid builder.
@@ -26,11 +26,11 @@ class CareerTechTagController extends AdminController
     {
         $grid = new Grid(new CareerTechTag());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('ID'));
         $grid->column('tag', __('Tag'));
-        $grid->column('career_id', __('Career id'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('career_id', __('Career ID'));
+        //$grid->column('created_at', __('Created at'));
+        //$grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -45,11 +45,11 @@ class CareerTechTagController extends AdminController
     {
         $show = new Show(CareerTechTag::findOrFail($id));
 
-        $show->field('id', __('Id'));
+        $show->field('id', __('ID'));
         $show->field('tag', __('Tag'));
-        $show->field('career_id', __('Career id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('career_id', __('Career ID'));
+        //$show->field('created_at', __('Created at'));
+        //$show->field('updated_at', __('Updated at'));
 
         return $show;
     }
@@ -64,7 +64,7 @@ class CareerTechTagController extends AdminController
         $form = new Form(new CareerTechTag());
 
         $form->text('tag', __('Tag'));
-        $form->number('career_id', __('Career id'));
+        $form->number('career_id', __('Career ID'));
 
         return $form;
     }

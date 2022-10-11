@@ -22,4 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('get_all_settings', [ApiController::class, 'get_all_settings'])->name('get_all_settings');
 Route::get('get_settings_by_id/{id}', [ApiController::class, 'get_settings_by_id'])->name('get_settings_by_id');
-//Route::get('get_portfolio/{id}', [ApiController::class, 'get_portfolio'])->name('get_portfolio');
+Route::get('get_settings_by_name/{name}', [ApiController::class, 'get_settings_by_name'])->name('get_settings_by_name');
+Route::get('get_portfolios_by_id/{id}', [ApiController::class, 'get_portfolios_by_id'])->name('get_portfolios_by_id');
+Route::get('get_careers_by_id/{id}', [ApiController::class, 'get_careers_by_id'])->name('get_careers_by_id');
+Route::post('message', [ApiController::class, 'storeMessage'])->name('message');

@@ -8,6 +8,8 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Encore\Admin;
+use Illuminate\Support\Facades\Auth;
 
 class PortfolioController extends AdminController
 {
@@ -27,14 +29,14 @@ class PortfolioController extends AdminController
     {
         $grid = new Grid(new Portfolio());
 
-        $grid->column('id', __('Id'));
-        $grid->column('project_title', __('Project title'));
-        $grid->column('project_desc', __('Project desc'));
-        $grid->column('project_iamge', __('Project iamge'));
-        $grid->column('setting_id', __('Setting id'));
+        $grid->column('id', __('ID'));
+        $grid->column('project_title', __('Project Title'));
+        $grid->column('project_desc', __('Project Description'));
+        $grid->column('project_iamge', __('Project Image'))->image();
+        //$grid->column('setting_id', __('Setting ID'));
         //$grid->column('status', __('Status'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        //$grid->column('created_at', __('Created at'));
+        //$grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -49,11 +51,11 @@ class PortfolioController extends AdminController
     {
         $show = new Show(Portfolio::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('project_title', __('Project title'));
-        $show->field('project_desc', __('Project desc'));
-        $show->field('project_iamge', __('Project iamge'));
-        $show->field('setting_id', __('Setting id'));
+        $show->field('id', __('ID'));
+        $show->field('project_title', __('Project Title'));
+        $show->field('project_desc', __('Project Description'));
+        $show->field('project_iamge', __('Project Image'))->image();
+        $show->field('setting_id', __('Setting ID'));
         //$show->field('status', __('Status'));
 
         $show->portfolioTechTags('Technology Tags', function ($usefulLinks) {
@@ -66,8 +68,8 @@ class PortfolioController extends AdminController
             //     $filter->like('content');
             // });
         });
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        //$show->field('created_at', __('Created at'));
+        //$show->field('updated_at', __('Updated at'));
 
         return $show;
     }
@@ -79,6 +81,8 @@ class PortfolioController extends AdminController
      */
     protected function form()
     {
+
+        $userID = Admin::user()->id;
         $settings = Settings::all();
         $option = [];
 
@@ -92,14 +96,14 @@ class PortfolioController extends AdminController
 
         $form = new Form(new Portfolio());
 
-        $form->text('project_title', __('Project title'))->rules('required');
+        $form->text('project_title', __('Project Title'))->rules('required');
         $form->textarea('project_desc', __('Project Description'))->rules('required|max:250');
-        $form->image('project_iamge', __('Project iamge'))->rules('required');
-        $form->select('setting_id', __('Setting id'))->options($option)->rules('required');
+        $form->image('project_iamge', __('Project Image'))->rules('required');
+        $form->select('setting_id', __('Company'))->options(Settings::all()->pluck('company_name','id'))->rules('required');
         //$form->text('status', __('Status'))->default('active');
 
-        $form->hasMany('portfolioTechTags','Enter Technology Tags', function (Form\NestedForm $form) {
-            $form->text('tag');
+        $form->hasMany('portfolioTechTags','Enter Technology Tags '.$userID, function (Form\NestedForm $form) {
+            $form->text('tag', __('Tag'));
         });
 
         return $form;

@@ -15,7 +15,7 @@ class PortfolioTechTagController extends AdminController
      *
      * @var string
      */
-    protected $title = 'PortfolioTechTag';
+    protected $title = 'Portfolio Tech Tags';
 
     /**
      * Make a grid builder.
@@ -26,11 +26,11 @@ class PortfolioTechTagController extends AdminController
     {
         $grid = new Grid(new PortfolioTechTag());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('ID'));
         $grid->column('tag', __('Tag'));
-        $grid->column('portfolio_id', __('Portfolio id'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('portfolio_id', __('Portfolio ID'));
+        //$grid->column('created_at', __('Created at'));
+        //$grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -45,11 +45,11 @@ class PortfolioTechTagController extends AdminController
     {
         $show = new Show(PortfolioTechTag::findOrFail($id));
 
-        $show->field('id', __('Id'));
+        $show->field('id', __('ID'));
         $show->field('tag', __('Tag'));
-        $show->field('portfolio_id', __('Portfolio id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('portfolio_id', __('Portfolio ID'));
+        //$show->field('created_at', __('Created at'));
+        //$show->field('updated_at', __('Updated at'));
 
         return $show;
     }
@@ -64,7 +64,7 @@ class PortfolioTechTagController extends AdminController
         $form = new Form(new PortfolioTechTag());
 
         $form->text('tag', __('Tag'));
-        $form->number('portfolio_id', __('Portfolio id'));
+        $form->number('portfolio_id', __('Portfolio ID'));
 
         return $form;
     }

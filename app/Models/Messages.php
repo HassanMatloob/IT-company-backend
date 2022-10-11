@@ -16,5 +16,6 @@ class Messages extends Model
         'email',
         'subject',
         'message',
+        'setting_id',
     ];
 }

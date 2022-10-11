@@ -27,14 +27,14 @@ class CareerController extends AdminController
     {
         $grid = new Grid(new Career());
 
-        $grid->column('id', __('Id'));
-        $grid->column('job_title', __('Job title'));
-        $grid->column('job_desc', __('Job desc'));
-        $grid->column('job_iamge', __('Job iamge'));
-        $grid->column('setting_id', __('Setting id'));
+        $grid->column('id', __('ID'));
+        $grid->column('job_title', __('Job Title'));
+        $grid->column('job_desc', __('Job Description'));
+        $grid->column('job_iamge', __('Job Image'))->image();
+        //$grid->column('setting_id', __('Setting ID'));
         //$grid->column('status', __('Status'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        //$grid->column('created_at', __('Created at'));
+        //$grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -49,14 +49,25 @@ class CareerController extends AdminController
     {
         $show = new Show(Career::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('job_title', __('Job title'));
-        $show->field('job_desc', __('Job desc'));
-        $show->field('job_iamge', __('Job iamge'));
-        $show->field('setting_id', __('Setting id'));
+        $show->field('id', __('ID'));
+        $show->field('job_title', __('Job Title'));
+        $show->field('job_desc', __('Job Description'));
+        $show->field('job_iamge', __('Job Image'))->image();
+        $show->field('setting_id', __('Setting ID'));
+
+        $show->careerTechTags('Technology Tags', function ($usefulLinks) {
+
+            $usefulLinks->resource('/admin/career-tech-tags');
+        
+            $usefulLinks->tag();
+        
+            // $navItems->filter(function ($filter) {
+            //     $filter->like('content');
+            // });
+        });
         //$show->field('status', __('Status'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        //$show->field('created_at', __('Created at'));
+        //$show->field('updated_at', __('Updated at'));
 
         return $show;
     }
@@ -81,14 +92,14 @@ class CareerController extends AdminController
 
         $form = new Form(new Career());
 
-        $form->text('job_title', __('Job title'))->rules('required');
-        $form->textarea('job_desc', __('Job desc'))->rules('required|max:250');
-        $form->image('job_iamge', __('Job iamge'))->rules('required');
-        $form->select('setting_id', __('Setting id'))->options($option)->rules('required');
+        $form->text('job_title', __('Job Title'))->rules('required');
+        $form->textarea('job_desc', __('Job Description'))->rules('required|max:250');
+        $form->image('job_iamge', __('Job Image'))->rules('required');
+        $form->select('setting_id', __('Company'))->options(Settings::all()->pluck('company_name','id'))->rules('required');
         //$form->text('status', __('Status'))->default('active');
 
         $form->hasMany('careerTechTags','Enter Technology Tags', function (Form\NestedForm $form) {
-            $form->text('tag');
+            $form->text('tag', __('Tag'));
         });
 
         return $form;

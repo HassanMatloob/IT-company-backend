@@ -23,4 +23,5 @@ Route::group([
     $router->resource('portfolio-tech-tags', PortfolioTechTagController::class);
     $router->resource('careers', CareerController::class);
     $router->resource('career-tech-tags', CareerTechTagController::class);
+    $router->resource('messages', MessagesController::class);
 }); 

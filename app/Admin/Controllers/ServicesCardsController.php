@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\ServicesCards;
+use App\Models\Settings;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -15,7 +16,7 @@ class ServicesCardsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'ServicesCards';
+    protected $title = 'Services Cards';
 
     /**
      * Make a grid builder.
@@ -26,14 +27,14 @@ class ServicesCardsController extends AdminController
     {
         $grid = new Grid(new ServicesCards());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('ID'));
         $grid->column('icon', __('Icon'));
         $grid->column('title', __('Title'));
-        $grid->column('short_description', __('Short description'));
+        $grid->column('short_description', __('Short Description'));
         $grid->column('details', __('Details'));
-        $grid->column('setting_id', __('Setting id'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('setting_id', __('Setting ID'));
+        //$grid->column('created_at', __('Created at'));
+        //$grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -48,14 +49,14 @@ class ServicesCardsController extends AdminController
     {
         $show = new Show(ServicesCards::findOrFail($id));
 
-        $show->field('id', __('Id'));
+        $show->field('id', __('ID'));
         $show->field('icon', __('Icon'));
         $show->field('title', __('Title'));
-        $show->field('short_description', __('Short description'));
+        $show->field('short_description', __('Short Description'));
         $show->field('details', __('Details'));
-        $show->field('setting_id', __('Setting id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('setting_id', __('Setting ID'));
+        //$show->field('created_at', __('Created at'));
+        //$show->field('updated_at', __('Updated at'));
 
         return $show;
     }
@@ -67,13 +68,25 @@ class ServicesCardsController extends AdminController
      */
     protected function form()
     {
+
+        $settings = Settings::all();
+        $option = [];
+
+        $option[0] = 'Please Select';
+
+        if ($settings) {
+            foreach ($settings as $setting) {
+               $option[$setting->id] = $setting->id;
+            }
+        }
+
         $form = new Form(new ServicesCards());
 
-        $form->text('icon', __('Icon'));
+        $form->icon('icon', __('Icon'));
         $form->text('title', __('Title'));
-        $form->text('short_description', __('Short description'));
+        $form->text('short_description', __('Short Description'));
         $form->text('details', __('Details'));
-        $form->number('setting_id', __('Setting id'));
+        $form->select('setting_id', __('Company'))->options(Settings::all()->pluck('company_name','id'))->rules('required');
 
         return $form;
     }

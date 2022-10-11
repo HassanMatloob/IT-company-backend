@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Settings;
 use Encore\Admin\Controllers\Dashboard;
 use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
@@ -12,9 +13,11 @@ class HomeController extends Controller
 {
     public function index(Content $content)
     {
+        $name = Settings::select('company_name')->first();
         return $content
             ->title('Dashboard')
-            ->description('Description...');
+            ->description('Description...')
+            ->row(Dashboard::title());
             // ->row(Dashboard::title())
             // ->row(function (Row $row) {
 
